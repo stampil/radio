@@ -1,6 +1,8 @@
 function Player(id){
     this.p = document.getElementById(id);
     this.timeControl = null;
+    this.stop_demand = false;
+    this.play_demand = false;
 
  
     
@@ -10,61 +12,74 @@ function Player(id){
     };
     
     this.changeSrc = function(src){
-        this.p.src = src;
+        this.p.src = 'mp3/'+src;
         this.p.load();
-        console.log('changeSrc',id,src);
+        console.log('changeSrc',src, id);
         
     };
     
     this.play = function(time){
-        console.log('play '+this.p.src, time);
+        this.killTimeControl();
+        this.p.volume = 0;
+        this.play_demand = true;
         this.p.currentTime=time || 0;
+
         this.p.play();
         this.timeControl = setInterval(this.timeInterval,300);
     };
     
     this.timeInterval = function(){
         var percent =  parseInt(Math.floor(this.p.currentTime/this.p.duration*100));
-        $('title').text( percent+'% '+this.getLabelMp3());
-
-        switch(percent){
-            case 100:
-            case 0:
-                this.p.volume=0;
-                break;
-            case 99:
-                this.p.volume=0.2;
-                this.next();
-                break;
-            case 1:
-                this.p.volume=0.2;
-                break;
-            case 98:
-            case 2:
-                this.p.volume=0.5;
-                break;
-            default:
-                this.p.volume = 1;
+        if(!isNaN(percent)){
+            $('title').text( percent+'% '+' '+this.p.volume+ ' ' +this.getLabelMp3());
         }
+
+        if(this.stop_demand){
+            this.p.volume = Math.max(0,(this.p.volume*10 -1)/10);
+            console.log('stop demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+            if(this.p.volume==0){
+                this.p.pause();
+                this.killTimeControl();               
+                this.stop_demande = false;
+                console.log('stop ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+            }
+        }
+        
+        if(this.play_demand){
+             this.p.volume = Math.min(1,(this.p.volume*10 +1)/10);
+                console.log('play demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+                if(this.p.volume==1){
+                    this.play_demand = false;
+                    console.log('play ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+                }
+        }
+        
         if(this.p.currentTime == this.p.duration){
             //switch
         }
     }.bind(this);
     
     this.stop = function(){
-        this.p.pause();
+        
+        this.stop_demand = true;
+        
+        return this.p.currentTime;
+    };
+    
+    this.killTimeControl = function(){
+        if(!this.timeControl) return;
         clearInterval(this.timeControl);
+        this.timeControl = null;
     };
     
     this.next = function(){
         player_secondaire.play();
         setTimeout(function(){
-            var time_ecoule = player_secondaire.getCurrentTime();
-            player_secondaire.stop();
             player_principal.changeSrc(player_secondaire.getSrc());
-            player_principal.play(time_ecoule);
-            player_secondaire.changeSrc('mp3/'+mp3s[inc_music++%mp3s.length]+'.mp3');
-        }.bind(this),3000);
+            player_secondaire.stop();
+            player_principal.play( player_secondaire.getCurrentTime());
+            player_secondaire.changeSrc(mp3s[inc_music++%mp3s.length]);
+        }.bind(this),10000);
         
     };
     
