@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Test</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>if (typeof jQuery === 'undefined') {
+  document.write(unescape('%3Cscript%20src%3D%22/js/jquery-2.1.4.min.js%22%3E%3C/script%3E'));
+</script>
 </head>
 <body>
 <audio src="mp3/The Submarines - Shoelaces.mp3" id="audio1" autoplay>
@@ -12,28 +16,6 @@
 </audio>
 
 <canvas id="canvas" width="300" height="200"></canvas>
-
-<script>
-    function successCallback(stream) {
-        var audioContext = new webkitAudioContext();
-
-        // Create an AudioNode from the stream.
-        var mediaStreamSource = audioContext.createMediaStreamSource( stream );
-
-        // Connect it to the destination to hear yourself (or any other node for processing!)
-        mediaStreamSource.connect( audioContext.destination );
-    }
-
-    function errorCallback() {
-        console.log("The following error occurred: " + err);
-    }
-
-    navigator.webkitGetUserMedia( {audio:true}, successCallback, errorCallback );
-
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    window.onload = function() {
-        audioContext = new AudioContext();
-    }
-</script>
+<script src="js/player.js"> </script>
 </body>
 </html>
