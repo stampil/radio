@@ -1,6 +1,7 @@
 *.log
 .htaccess
 .idea/
+nbproject/
 sitemap.xml
 sitemap.xml.gz
 wp-config.php
