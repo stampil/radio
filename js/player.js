@@ -22,12 +22,18 @@ function Player(id){
     
     this.play = function(time){
         this.killTimeControl();
+
         this.p.volume = 0;
         this.play_demand = true;
         
         this.p.play();
-        this.p.currentTime=time || 0;
-        console.info('play',this.p.currentTime);
+        
+        if(!time) time = 0;
+
+        setTimeout(function(){
+            this.p.currentTime = time;
+        }.bind(this),200);
+
         this.flag_next = false;
         this.timeControl = setInterval(this.timeInterval,300);
     };
@@ -46,7 +52,7 @@ function Player(id){
                 this.p.pause();
                 this.killTimeControl();               
                 this.stop_demand = false;
-                console.log('stop ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+                console.log('stop ok '+this.getLabelMp3(), tthis.p.currentTime, this.p.volume, id);
                 this.changeSrc(mp3s[inc_music++%mp3s.length]);
             }
         }
