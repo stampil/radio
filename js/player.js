@@ -52,7 +52,7 @@ function Player(id){
                 this.p.pause();
                 this.killTimeControl();               
                 this.stop_demand = false;
-                console.log('stop ok '+this.getLabelMp3(), tthis.p.currentTime, this.p.volume, id);
+                console.log('stop ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
                 this.changeSrc(mp3s[inc_music++%mp3s.length]);
             }
         }
