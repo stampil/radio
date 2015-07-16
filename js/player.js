@@ -3,6 +3,8 @@ function Player(id){
     this.timeControl = null;
     this.stop_demand = false;
     this.play_demand = false;
+    this.flag_next = false;
+
 
  
     
@@ -12,7 +14,7 @@ function Player(id){
     };
     
     this.changeSrc = function(src){
-        this.p.src = 'mp3/'+src;
+        this.p.src = src;
         this.p.load();
         console.log('changeSrc',src, id);
         
@@ -25,6 +27,7 @@ function Player(id){
         this.p.currentTime=time || 0;
 
         this.p.play();
+        this.flag_next = false;
         this.timeControl = setInterval(this.timeInterval,300);
     };
     
@@ -39,7 +42,8 @@ function Player(id){
             console.log('stop demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
             if(this.p.volume==0){
                 this.p.pause();
-                this.killTimeControl();               
+                this.killTimeControl();   
+                this.changeSrc('mp3/'+mp3s[inc_music++%mp3s.length]);
                 this.stop_demande = false;
                 console.log('stop ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
             }
@@ -54,8 +58,9 @@ function Player(id){
                 }
         }
         
-        if(this.p.currentTime == this.p.duration){
-            //switch
+        if(percent>=99 && !this.flag_next){
+            this.flag_next = true;
+            this.next();
         }
     }.bind(this);
     
@@ -73,14 +78,14 @@ function Player(id){
     };
     
     this.next = function(){
-        player_secondaire.play();
-        setTimeout(function(){
-            player_principal.changeSrc(player_secondaire.getSrc());
-            player_secondaire.stop();
-            player_principal.play( player_secondaire.getCurrentTime());
-            player_secondaire.changeSrc(mp3s[inc_music++%mp3s.length]);
-        }.bind(this),10000);
-        
+        if(id=="audio1"){
+            player_secondaire.play();
+            this.stop();
+        }
+        else{
+            player_principal.play();
+            this.stop();
+        }    
     };
     
     this.getCurrentTime = function (){
