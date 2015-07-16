@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Test</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>if (typeof jQuery === 'undefined') {
-  document.write(unescape('%3Cscript%20src%3D%22/js/jquery-2.1.4.min.js%22%3E%3C/script%3E'));
-</script>
-</head>
-<body>
-<audio src="mp3/The Submarines - Shoelaces.mp3" id="audio1" autoplay>
-    Votre navigateur ne supporte pas l'élément <code>audio</code>.
-</audio>
-<audio src="mp3/Stellardrone - Ultra Deep Field.mp3" id="audio2"  preload="auto">
-    Votre navigateur ne supporte pas l'élément <code>audio</code>.
-</audio>
-
-<canvas id="canvas" width="300" height="200"></canvas>
-<script src="js/player.js"> </script>
-</body>
+    <head>
+        <title>Test</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>if (typeof jQuery === 'undefined') {
+                document.write(unescape('%3Cscript%20src%3D%22/js/jquery-2.1.4.min.js%22%3E%3C/script%3E'));
+        </script>
+    </head>
+    <body>
+        <audio src="mp3/The Submarines - Shoelaces.mp3" id="audio1">
+            Votre navigateur ne supporte pas l'élément <code>audio</code>.
+        </audio>
+        <audio src="mp3/Mr.Kitty - Destroy Me.mp3" id="audio2"  preload="auto">
+            Votre navigateur ne supporte pas l'élément <code>audio</code>.
+        </audio>
+        <div id='info'></div>
+        <script>
+    var mp3s = new Array(
+            'LukHash - ALPHA',
+            'OVERWERK - Alive',
+            'Stellardrone - Ultra Deep Field'
+            );
+    var inc_music = 0;
+    
+        </script>
+        <script src="js/player.js"></script>
+        <script src="js/radio.js"></script>
+    </body>
 </html>
