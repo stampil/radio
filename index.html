@@ -17,18 +17,20 @@
         <div id='info'></div>
         <script>
 
-    var mp3s = new Array(
-            'OVERWERK - Alive.mp3',
-            'General Fuzz - Comfort Zone.mp3',
-            'Dope Stars Inc. - It\'s Today.mp3',
-            'LukHash - ALPHA.mp3',
-            'Stellardrone - Ultra Deep Field.mp3',
-            'The Submarines - Shoelaces.mp3',
-            'Mr.Kitty - Destroy Me.mp3'
-            );
-    
-    var inc_music = 0;
-    
+                var mp3s = new Array(
+            'mp3/rock/Graveyard - Goliath.mp3',
+            'mp3/rock/Stoned Jesus - Electric Mistress.mp3',
+            'mp3/electro/Stellardrone - Ultra Deep Field.mp3',
+            'mp3/electro/The Submarines - Shoelaces.mp3',
+            'mp3/electro/LukHash - ALPHA.mp3',
+            'mp3/electro/OVERWERK - Alive.mp3',
+            'mp3/electro/General Fuzz - Comfort Zone.mp3',
+            'mp3/electro/Dope Stars Inc. - It\'s Today.mp3',      
+            'mp3/electro/Mr.Kitty - Destroy Me.mp3'
+                        );
+                var inc_music = Math.floor(Math.random() * mp3s.length);
+                var random_duration = Math.floor(Math.random() * 50 + 50);
+
         </script>
         <script src="js/player.js"></script>
         <script src="js/radio.js"></script>

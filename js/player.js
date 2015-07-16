@@ -24,41 +24,43 @@ function Player(id){
         this.killTimeControl();
         this.p.volume = 0;
         this.play_demand = true;
-        this.p.currentTime=time || 0;
-
+        
         this.p.play();
+        this.p.currentTime=time || 0;
+        console.info('play',this.p.currentTime);
         this.flag_next = false;
         this.timeControl = setInterval(this.timeInterval,300);
     };
     
     this.timeInterval = function(){
+
         var percent =  parseInt(Math.floor(this.p.currentTime/this.p.duration*100));
         if(!isNaN(percent)){
-            $('title').text( percent+'% '+' '+this.p.volume+ ' ' +this.getLabelMp3());
+            $('title').text( percent+'% '+' '+this.p.volume+ ' '+ id+' ' +this.getLabelMp3());
         }
 
         if(this.stop_demand){
             this.p.volume = Math.max(0,(this.p.volume*10 -1)/10);
-            console.log('stop demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+            //console.log('stop demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
             if(this.p.volume==0){
                 this.p.pause();
-                this.killTimeControl();   
-                this.changeSrc('mp3/'+mp3s[inc_music++%mp3s.length]);
-                this.stop_demande = false;
+                this.killTimeControl();               
+                this.stop_demand = false;
                 console.log('stop ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+                this.changeSrc(mp3s[inc_music++%mp3s.length]);
             }
         }
         
         if(this.play_demand){
              this.p.volume = Math.min(1,(this.p.volume*10 +1)/10);
-                console.log('play demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
+                //console.log('play demand '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
                 if(this.p.volume==1){
                     this.play_demand = false;
                     console.log('play ok '+this.getLabelMp3(), this.p.currentTime, this.p.volume, id);
                 }
         }
         
-        if(percent>=99 && !this.flag_next){
+        if(percent>=97 && !this.flag_next){
             this.flag_next = true;
             this.next();
         }
@@ -78,6 +80,7 @@ function Player(id){
     };
     
     this.next = function(){
+        console.log('next appelé par', id);
         if(id=="audio1"){
             player_secondaire.play();
             this.stop();

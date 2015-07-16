@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    player_principal.changeSrc('mp3/'+mp3s[0]);
-    player_secondaire.changeSrc('mp3/'+mp3s[1]);
-    player_principal.play();
+    player_principal.changeSrc(mp3s[inc_music++%mp3s.length]);
+    player_secondaire.changeSrc(mp3s[inc_music++%mp3s.length]);
+    player_principal.play(random_duration);
 });
