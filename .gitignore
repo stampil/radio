@@ -2,6 +2,7 @@
 .htaccess
 .idea/
 nbproject/
+mp3/
 sitemap.xml
 sitemap.xml.gz
 wp-config.php
